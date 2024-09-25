@@ -1,8 +1,8 @@
 #include <BeeNeXT.h>
 #include "lcd_iot.h"
 
-#define SSID              "MiHome"
-#define PASSWORD          "12345678"
+#define SSID              "------"
+#define PASSWORD          "------"
 
 #define MQTT_HOST         "broker.hivemq.com"
 #define MQTT_PORT         1883
