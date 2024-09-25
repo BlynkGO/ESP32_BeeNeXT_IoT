@@ -17,14 +17,14 @@ void setup() {
   lcd_iot::begin(MQTT_HOST, MQTT_PORT, MQTT_USER, MQTT_PASSWORD);
 
   static SoftTimer timer_sensor;
-  timer_sensor.setInterval(1000,[](){
+  timer_sensor.setInterval(1000,[](){             /* ตั้งเวลาเป็นช่วงๆ ในการอ่าน sensor */
     float temp  = random(10000)/100.0;            /* จำลองโดยใช้สุ่มตัวเลข  ใช้งานจริง ให้อ่านตาม sensor ที่ใช้ */
     float humid = random(10000)/100.0;            /* จำลองโดยใช้สุ่มตัวเลข  ใช้งานจริง ให้อ่านตาม sensor ที่ใช้ */
     Serial.printf("[Temp] %.2f ; [Humid] %.2f \n", temp, humid);
 
     if(lcd_iot::connected()) {                    /* เมื่อ เชื่อมต่อ mqtt สำเร็จแล้ว */
-      lcd_iot::print("/mylcd/iot/temp",  temp); /* print ค่า temp ไปยัง lcd ทาง iot โดยส่งไปที่ topic "/mylcd/iot/temp" */
-      lcd_iot::print("/mylcd/iot/humid", humid);/* print ค่า humid ไปยัง lcd ทาง iot โดยส่งไปที่ topic "/mylcd/iot/humid" */
+      lcd_iot::print("/mylcd/iot/temp",  temp);   /* print ค่า temp ไปยัง lcd ทาง iot โดยส่งไปที่ topic "/mylcd/iot/temp" */
+      lcd_iot::print("/mylcd/iot/humid", humid);  /* print ค่า humid ไปยัง lcd ทาง iot โดยส่งไปที่ topic "/mylcd/iot/humid" */
     }
   });
 
