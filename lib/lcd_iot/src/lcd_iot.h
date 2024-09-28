@@ -29,7 +29,7 @@ namespace SmartMQTT {
   void setServer(String mqtt_host, uint16_t mqtt_port, String mqtt_user="", String mqtt_password="");
   void publish(String topic, String message, boolean retained=false);
   void subscribe(String topic);
-  void onData(void(*fc_ondata_cb)(String topic, String message));
+  void onMessage(void(*fc_onmessage_cb)(String topic, String message));
   bool connected();
   void disconnect();
 }
@@ -41,8 +41,8 @@ namespace lcd_iot {
   void print(String topic,  double value, int decimalPlaces=2);
   void print(String topic, int value);
   void subscribe(String topic);
-  void onData(void(*fc_ondata_cb)(String topic, String message));
-  void (*getOnDataCallback())(String topic, String message);
+  void onMessage(void(*fc_onmessage_cb)(String topic, String message));
+  void (*getOnMessageCallback())(String topic, String message);
   bool connected();
   void disconnect();
 }

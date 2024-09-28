@@ -8,13 +8,13 @@ namespace lcd_iot {
   void print(String topic,  double value, int decimalPlaces);
   void print(String topic, int value);
   void subscribe(String topic);
-  void onData(void(*fc_ondata_cb)(String topic, String message));
-  void (*getOnDataCallback())(String topic, String message);
+  void onMessage(void(*fc_onmessage_cb)(String topic, String message));
+  void (*getOnMessageCallback())(String topic, String message);
   bool connected();
   void disconnect();
 }
 
-void(*_lcd_fc_onData)(String topic, String message) = NULL;
+void(*_lcd_fc_onMessage)(String topic, String message) = NULL;
 
 void lcd_iot::begin(String mqtt_host, uint16_t mqtt_port, String mqtt_user, String mqtt_password){
   SmartMQTT::setServer(mqtt_host, mqtt_port, mqtt_user, mqtt_password);
@@ -43,12 +43,12 @@ void lcd_iot::subscribe(String topic){
   SmartMQTT::subscribe(topic);
 }
 
-void lcd_iot::onData(void(*fc_ondata_cb)(String topic, String message)){
-  _lcd_fc_onData = fc_ondata_cb;
+void lcd_iot::onMessage(void(*fc_onmessage_cb)(String topic, String message)){
+  _lcd_fc_onMessage = fc_onmessage_cb;
 }
 
-void (*lcd_iot::getOnDataCallback())(String topic, String message) {
-  return _lcd_fc_onData;
+void (*lcd_iot::getOnMessageCallback())(String topic, String message) {
+  return _lcd_fc_onMessage;
 }
 
 bool lcd_iot::connected(){

@@ -19,7 +19,7 @@
 WiFiClient _mqtt_client;
 PubSubClient _mqtt(_mqtt_client);
 std::vector<String> mqtt_subscribe_topics;
-void(*fc_onData)(String topic, String message) = NULL;
+void(*_fc_onMessage)(String topic, String message) = NULL;
 
 String _mqtt_host;
 uint16_t _mqtt_port;
@@ -30,7 +30,7 @@ namespace SmartMQTT {
   void setServer(String mqtt_host, uint16_t mqtt_port, String mqtt_user, String mqtt_password);
   void publish(String topic, String message, boolean retained);
   void subscribe(String topic);
-  void onData(void(*fc_ondata_cb)(String topic, String message));
+  void onMessage(void(*fc_onmessage_cb)(String topic, String message));
   bool connected();
   void disconnect();
 }
@@ -66,13 +66,13 @@ void SmartMQTT::setServer(String mqtt_host, uint16_t mqtt_port, String mqtt_user
     }
 
     memcpy(message.get(), data, data_len); message[data_len] = '\0';
-    if (fc_onData) {
-      fc_onData(topic, message.get());
+    if (_fc_onMessage) {
+      _fc_onMessage(topic, message.get());
     }
 
-    void (*lcd_onData)(String, String) = lcd_iot::getOnDataCallback();
-    if( lcd_onData != NULL ) {
-      lcd_onData(topic, message.get());
+    void (*lcd_onMessage)(String, String) = lcd_iot::getOnMessageCallback();
+    if( lcd_onMessage != NULL ) {
+      lcd_onMessage(topic, message.get());
     }
   });
 
@@ -118,8 +118,8 @@ void SmartMQTT::subscribe(String topic) {
   }
 }
 
-void SmartMQTT::onData(void(*fc)(String topic, String message)) {
-  fc_onData = fc;
+void SmartMQTT::onMessage(void(*fc)(String topic, String message)) {
+  _fc_onMessage = fc;
 }
 
 void SmartMQTT::publish(String topic, String message, boolean retained) {
