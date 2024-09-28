@@ -1,7 +1,11 @@
 #ifndef __LCD_IOT_H__
 #define __LCD_IOT_H__
 
-#include <WiFi.h>
+#if defined(ESP8266)
+  #include <ESP8266WiFi.h>
+#elif defined (ESP32)
+  #include <WiFi.h>
+#endif
 #include <BeeNeXT.h>
 #include <PubSubClient.h>
 

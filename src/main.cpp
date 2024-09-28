@@ -33,6 +33,7 @@ void setup() {
   // lcd_iot::onData([](String topic, String message){
   //   if(topic == "/mylcd/iot/switch01"){
   //     bool switch_state = message.toInt();
+  //     // สถานะ switch_state เมื่อรับค่ามาได้จากจอแล้ว สามารถนำไปสั่งเปิดปิด relay ต่อไปได้
   //   }
   // });
 
